@@ -3,8 +3,6 @@ import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
 import "./LandingPage.css";
 import { useEffect, useState } from "react";
 
-
-
 const Landing = ({ data }) => {
   const [user, setUser] = useState([]);
   useEffect(() => {
@@ -13,7 +11,7 @@ const Landing = ({ data }) => {
   return (
     <>
       <div className="search">
-      <input type="text" placeholder="Search User"  />
+        <input type="text" placeholder="Search User" />
       </div>
       <table>
         <thead>
@@ -41,9 +39,15 @@ const Landing = ({ data }) => {
               <td>
                 <input type="checkbox" />
               </td>
-              <td><input type="text" value={e.name} /></td>
-              <td><input type="text" value={e.role} /></td>
-              <td><input type="text" value={e.email} /></td>
+              <td>
+                <input type="text" value={e.name} />
+              </td>
+              <td>
+                <input type="text" value={e.role} />
+              </td>
+              <td>
+                <input type="text" value={e.email} />
+              </td>
               <td>
                 <FaEdit />
                 <AiFillDelete />

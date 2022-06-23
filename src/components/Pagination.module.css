@@ -8,7 +8,37 @@ a {
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  margin-left: 20px;
   border: none;
   outline: none;
+}
+.editLayer {
+  margin: auto;
+  margin-top: 20px;
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.deleteButton {
+  background-color: red;
+  color: white;
+  width: 120px;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
+.prev {
+  background-color: white;
+  width: 0px;
+  height: 30px;
+  outline: none;
+  border: none;
+}
+.next {
+  background-color: white;
+  width: 0px;
+  height: 30px;
+  outline: none;
+  border: none;
 }
