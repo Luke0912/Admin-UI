@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+
+.editLayer{
+  margin-top: 20px;
+width: 60%;
+display: flex;
+justify-content:space-evenly;
+align-items: center;
+}
+.deleteButton{
+  background-color: red;
+  color:white;
+  width: 150px;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
