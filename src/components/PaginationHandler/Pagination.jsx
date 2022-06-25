@@ -4,7 +4,7 @@ import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowFor
 import { TbArrowBarToLeft } from "react-icons/tb";
 import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
-import Landing from "../pages/LandingPage";
+import Landing from "../../Pages/Landing/Landing";
 
 const Pagination = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);

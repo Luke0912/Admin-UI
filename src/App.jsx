@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import configuration from "./configs";
-import Pagination from "./components/Pagination";
+import Pagination from "./components/PaginationHandler/Pagination";
 
 function App() {
   const [data, setData] = useState([]);
