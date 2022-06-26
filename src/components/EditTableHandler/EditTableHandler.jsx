@@ -4,16 +4,14 @@ import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
 import { useState } from "react";
 
-const Table = ({ data }) => {
+const Table = ({ data, saveNewData }) => {
   const [editable, setEditable] = useState(false);
 
-  const [editableValues, setEditableValues] = [
-    {
-      name: data.name,
-      role: data.role,
-      email: data.email,
-    },
-  ];
+  const [editableValues, setEditableValues] = useState({
+    name: data.name,
+    role: data.role,
+    email: data.email,
+  });
 
   const handleEditing = (e) => {
     const value = { ...editableValues };
@@ -23,11 +21,14 @@ const Table = ({ data }) => {
 
   const onConfirm = () => {
     const payLoad = {
+      id: data.id,
       name: editableValues.name,
       role: editableValues.role,
       email: editableValues.email,
     };
+
     setEditableValues({ payLoad });
+    saveNewData(payLoad);
     setEditable(false);
   };
 
@@ -81,9 +82,9 @@ const Table = ({ data }) => {
             <>
               <input
                 type="text"
-                placeholder="Role"
+                placeholder="Email"
                 value={editableValues.email}
-                name="role"
+                name="email"
                 onChange={handleEditing}
               />
               <br />

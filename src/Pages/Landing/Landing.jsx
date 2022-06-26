@@ -1,19 +1,24 @@
-import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
-import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
 import "./Landing.css";
 import { useState, useEffect } from "react";
 import Table from "../../components/EditTableHandler/EditTableHandler";
 
 const Landing = ({ data }) => {
   const [user, setUser] = useState([]);
+
+  // const [edited, setEdited] = useState([]);
+
   useEffect(() => {
     setUser(data);
   }, [data]);
 
-  const [button, setButton] = useState(false);
-
-  const handleEdit = () => {
-    setButton(true);
+  const saveNewData = (payload) => {
+    const newData = user.map((e) => {
+      if (payload.id === e.id) {
+        return { ...e, ...payload };
+      }
+      return e;
+    });
+    setUser(newData);
   };
 
   return (
@@ -41,38 +46,15 @@ const Landing = ({ data }) => {
             </th>
           </tr>
         </thead>
-        {user.map((e) => (
-          <>
-            <tbody>
+        <tbody>
+          {user.map((e) => (
+            <>
               <tr key={e.id}>
-                {!button && (
-                  <>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>
-                      <p>{e.name}</p>
-                    </td>
-                    <td>
-                      <p>{e.email}</p>
-                    </td>
-                    <td>
-                      <p>{e.email}</p>
-                    </td>
-                    <td>
-                      <FaEdit
-                        onClick={handleEdit}
-                        style={{ marginRight: "20px" }}
-                      />
-                      <AiFillDelete />
-                    </td>
-                  </>
-                )}
-                {button && <Table data={e} />}
+                <Table data={e} saveNewData={saveNewData} />
               </tr>
-            </tbody>
-          </>
-        ))}
+            </>
+          ))}
+        </tbody>
       </table>
     </>
   );
