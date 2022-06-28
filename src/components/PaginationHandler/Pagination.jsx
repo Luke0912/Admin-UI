@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoArrowBackCircleSharp } from "@react-icons/all-files/io5/IoArrowBackCircleSharp";
 import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowForwardCircleSharp";
 import { TbArrowBarToLeft } from "react-icons/tb";
@@ -6,15 +6,21 @@ import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
 import Landing from "../../Pages/Landing/Landing";
 
-const Pagination = ({ data }) => {
+const Pagination = ({ data, newData }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dataPerPage] = useState(10);
 
-  //get number of data per
-  const indexOfLastData = currentPage * dataPerPage;
-  const indexOfFirstData = indexOfLastData - dataPerPage;
-  const currentData = data.slice(indexOfFirstData, indexOfLastData);
+  const [edi, setEdi] = useState([]);
+  console.log("edi:", edi);
+
+  useEffect(() => {
+    //get number of data per page
+    const indexOfLastData = currentPage * dataPerPage;
+    const indexOfFirstData = indexOfLastData - dataPerPage;
+    const currentData = data.slice(indexOfFirstData, indexOfLastData);
+    setEdi(currentData);
+  }, [currentPage, data, dataPerPage]);
 
   const pageNumbers = [];
 
@@ -42,9 +48,16 @@ const Pagination = ({ data }) => {
     setCurrentPage(pageNumbers.length);
   };
 
+  // edited
+
+
+  const setUpdated = ((cb)=>{
+    newData(cb)
+  })
+
   return (
     <>
-      <Landing data={currentData} />
+      <Landing data={edi} setUpdated={setUpdated} />
       <div className={styles.editLayer}>
         <button className={styles.deleteButton}>Delete Selected</button>
         <button onClick={toFirst} className={styles.prev}>

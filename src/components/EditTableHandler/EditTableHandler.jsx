@@ -1,7 +1,7 @@
-import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
-import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
-import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
+import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
+import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
+import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { useState } from "react";
 
 const Table = ({ data, saveNewData }) => {
@@ -27,7 +27,7 @@ const Table = ({ data, saveNewData }) => {
       email: editableValues.email,
     };
 
-    setEditableValues({ payLoad });
+    setEditableValues(payLoad);
     saveNewData(payLoad);
     setEditable(false);
   };

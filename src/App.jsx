@@ -16,10 +16,20 @@ function App() {
     });
   };
 
+  const newData = (payload) => {
+    const newData = data.map((e) => {
+      if (payload.id === e.id) {
+        return { ...e, ...payload };
+      }
+      return e;
+    });
+    setData(newData);
+  };
+
   return (
     <>
       <div className="App">
-        <Pagination data={data} />
+        <Pagination data={data} newData={newData} />
       </div>
     </>
   );
