@@ -6,7 +6,6 @@ import configuration from "./configs";
 
 function App() {
   const [data, setData] = useState([]);
-  console.log(data);
 
   useEffect(() => {
     getData();
@@ -15,10 +14,6 @@ function App() {
   const getData = () => {
     axios.get(configuration.BASE_URL).then((data) => {
       setData(data.data);
-      const tempMark = data.data.map((e) => {
-        return { ...e, isChecked: false };
-      });
-      setData(tempMark);
     });
   };
 
@@ -32,20 +27,11 @@ function App() {
     });
     setData(newData);
   };
-  //update the value of checkbox
-
-  const updateValue = () => {
-    console.log("hello");
-  };
 
   return (
     <>
       <div className="App">
-        <Pagination
-          data={data}
-          toTopLevel={toTopLevel}
-          updateValue={updateValue}
-        />
+        <Pagination data={data} toTopLevel={toTopLevel} />
       </div>
     </>
   );

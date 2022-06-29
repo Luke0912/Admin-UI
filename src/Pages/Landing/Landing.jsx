@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Table from "../../components/EditTableHandler/EditTableHandler";
 
-const Landing = ({ data, setUpdated,passedCheck }) => {
+const Landing = ({ data, setUpdated, passedCheck }) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
@@ -18,8 +18,8 @@ const Landing = ({ data, setUpdated,passedCheck }) => {
 
   // passing select function from child to landing
 
-  const changeValue = () => {
-    passedCheck();
+  const changeValue = (name, checked) => {
+    passedCheck(name, checked);
   };
 
   return (

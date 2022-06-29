@@ -7,19 +7,23 @@ import { TbArrowBarToLeft } from "react-icons/tb";
 import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
 
-const Pagination = ({ data, toTopLevel, updateValue }) => {
+const Pagination = ({ data, toTopLevel }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dataPerPage] = useState(10);
 
   const [newData, setNewData] = useState([]);
+  console.log("newData:", newData);
 
   useEffect(() => {
     //get number of data per page
     const indexOfLastData = currentPage * dataPerPage;
     const indexOfFirstData = indexOfLastData - dataPerPage;
     const currentData = data.slice(indexOfFirstData, indexOfLastData);
-    setNewData(currentData);
+    let tempMark = currentData.map((e) => {
+      return { ...e, isChecked: false };
+    });
+    setNewData(tempMark);
   }, [currentPage, data, dataPerPage]);
 
   const pageNumbers = [];
@@ -52,9 +56,14 @@ const Pagination = ({ data, toTopLevel, updateValue }) => {
   const setUpdated = (payload) => {
     toTopLevel(payload);
   };
-  //passing the value of check box to app.jsx
-  const passedCheck = () => {
-    updateValue();
+
+  //capturing  the value of check box
+  const passedCheck = (name, checked) => {
+    let tempData = newData.map((e) =>
+      e.name === name ? { ...e, isChecked: !checked } : e
+    );
+    setNewData(tempData);
+    console.log("tempData:", tempData);
   };
 
   return (

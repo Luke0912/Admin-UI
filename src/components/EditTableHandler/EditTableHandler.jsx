@@ -12,7 +12,6 @@ const Table = ({ data, saveEditedData, changeValue }) => {
     name: data.name,
     role: data.role,
     email: data.email,
-    isChecked: data.isChecked,
   });
   const handleEditing = (e) => {
     const value = { ...editableValues };
@@ -26,7 +25,6 @@ const Table = ({ data, saveEditedData, changeValue }) => {
       name: editableValues.name,
       role: editableValues.role,
       email: editableValues.email,
-      isChecked: data.isChecked,
     };
     setEditableValues(payLoad);
     saveEditedData(payLoad);
@@ -38,15 +36,16 @@ const Table = ({ data, saveEditedData, changeValue }) => {
     setEditable((curr) => !curr);
   };
 
-  //select row
+  // select row
   const handleSelect = (e) => {
-    changeValue();
+    const { name, checked } = e.target;
+    changeValue(name, !checked);
   };
 
   return (
     <>
       <td>
-        <input type="checkbox" onChange={handleSelect} />
+        <input type="checkbox" onChange={handleSelect} name={data.name} />
       </td>
       <td>
         <>
