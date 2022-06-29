@@ -1,18 +1,25 @@
 import "./Landing.css";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
+
 import Table from "../../components/EditTableHandler/EditTableHandler";
 
-const Landing = ({ data, setUpdated }) => {
+const Landing = ({ data, setUpdated,passedCheck }) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     setUser(data);
   }, [data]);
 
+  //passing the payload from landing to paginated data
+  const saveEditedData = (payload) => {
+    setUpdated(payload);
+  };
 
-  const saveNewData = (cb) => {
-    setUpdated(cb);
-    console.log("hello cb");
+  // passing select function from child to landing
+
+  const changeValue = () => {
+    passedCheck();
   };
 
   return (
@@ -44,7 +51,11 @@ const Landing = ({ data, setUpdated }) => {
           {user.map((e) => (
             <>
               <tr key={e.id}>
-                <Table data={e} saveNewData={saveNewData} />
+                <Table
+                  data={e}
+                  saveEditedData={saveEditedData}
+                  changeValue={changeValue}
+                />
               </tr>
             </>
           ))}

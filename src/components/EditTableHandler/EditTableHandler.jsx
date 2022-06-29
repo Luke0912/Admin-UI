@@ -4,15 +4,16 @@ import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
 import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { useState } from "react";
 
-const Table = ({ data, saveNewData }) => {
+const Table = ({ data, saveEditedData, changeValue }) => {
   const [editable, setEditable] = useState(false);
 
   const [editableValues, setEditableValues] = useState({
+    id: data.id,
     name: data.name,
     role: data.role,
     email: data.email,
+    isChecked: data.isChecked,
   });
-
   const handleEditing = (e) => {
     const value = { ...editableValues };
     const nValues = { ...value, [e.target.name]: e.target.value };
@@ -25,21 +26,27 @@ const Table = ({ data, saveNewData }) => {
       name: editableValues.name,
       role: editableValues.role,
       email: editableValues.email,
+      isChecked: data.isChecked,
     };
-
     setEditableValues(payLoad);
-    saveNewData(payLoad);
+    saveEditedData(payLoad);
     setEditable(false);
+    console.log(editableValues);
   };
 
   const handleUserEdit = () => {
     setEditable((curr) => !curr);
   };
 
+  //select row
+  const handleSelect = (e) => {
+    changeValue();
+  };
+
   return (
     <>
       <td>
-        <input type="checkbox" />
+        <input type="checkbox" onChange={handleSelect} />
       </td>
       <td>
         <>
@@ -103,6 +110,7 @@ const Table = ({ data, saveNewData }) => {
           <FaUndo
             onClick={() => {
               setEditable(false);
+              setEditableValues(data);
             }}
             style={{ marginRight: "20px" }}
           />

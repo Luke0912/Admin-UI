@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
+
 import { IoArrowBackCircleSharp } from "@react-icons/all-files/io5/IoArrowBackCircleSharp";
 import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowForwardCircleSharp";
+import Landing from "../../Pages/Landing/Landing";
 import { TbArrowBarToLeft } from "react-icons/tb";
 import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
-import Landing from "../../Pages/Landing/Landing";
 
-const Pagination = ({ data, newData }) => {
+const Pagination = ({ data, toTopLevel, updateValue }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dataPerPage] = useState(10);
 
-  const [edi, setEdi] = useState([]);
-  console.log("edi:", edi);
+  const [newData, setNewData] = useState([]);
 
   useEffect(() => {
     //get number of data per page
     const indexOfLastData = currentPage * dataPerPage;
     const indexOfFirstData = indexOfLastData - dataPerPage;
     const currentData = data.slice(indexOfFirstData, indexOfLastData);
-    setEdi(currentData);
+    setNewData(currentData);
   }, [currentPage, data, dataPerPage]);
 
   const pageNumbers = [];
@@ -48,16 +48,22 @@ const Pagination = ({ data, newData }) => {
     setCurrentPage(pageNumbers.length);
   };
 
-  // edited
-
-
-  const setUpdated = ((cb)=>{
-    newData(cb)
-  })
+  // passing the updated data to top level
+  const setUpdated = (payload) => {
+    toTopLevel(payload);
+  };
+  //passing the value of check box to app.jsx
+  const passedCheck = () => {
+    updateValue();
+  };
 
   return (
     <>
-      <Landing data={edi} setUpdated={setUpdated} />
+      <Landing
+        data={newData}
+        setUpdated={setUpdated}
+        passedCheck={passedCheck}
+      />
       <div className={styles.editLayer}>
         <button className={styles.deleteButton}>Delete Selected</button>
         <button onClick={toFirst} className={styles.prev}>

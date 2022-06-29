@@ -1,10 +1,12 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import configuration from "./configs";
+
 import Pagination from "./components/PaginationHandler/Pagination";
+import axios from "axios";
+import configuration from "./configs";
 
 function App() {
   const [data, setData] = useState([]);
+  console.log(data);
 
   useEffect(() => {
     getData();
@@ -13,10 +15,15 @@ function App() {
   const getData = () => {
     axios.get(configuration.BASE_URL).then((data) => {
       setData(data.data);
+      const tempMark = data.data.map((e) => {
+        return { ...e, isChecked: false };
+      });
+      setData(tempMark);
     });
   };
 
-  const newData = (payload) => {
+  // Final function from the child to topLevel(Parent)
+  const toTopLevel = (payload) => {
     const newData = data.map((e) => {
       if (payload.id === e.id) {
         return { ...e, ...payload };
@@ -25,11 +32,20 @@ function App() {
     });
     setData(newData);
   };
+  //update the value of checkbox
+
+  const updateValue = () => {
+    console.log("hello");
+  };
 
   return (
     <>
       <div className="App">
-        <Pagination data={data} newData={newData} />
+        <Pagination
+          data={data}
+          toTopLevel={toTopLevel}
+          updateValue={updateValue}
+        />
       </div>
     </>
   );
