@@ -1,10 +1,10 @@
-import "./Landing.css";
+import "./Tabledesign.css";
 
 import { useEffect, useState } from "react";
 
-import Table from "../../components/EditTableHandler/EditTableHandler";
+import Row from "../../components/RowHandler/Row";
 
-const Landing = ({ data, setUpdated, passedCheck }) => {
+const Table = ({ data, setUpdated, passedCheck, newRow }) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
@@ -22,6 +22,18 @@ const Landing = ({ data, setUpdated, passedCheck }) => {
     passedCheck(name, checked);
   };
 
+  //initiating a function when select all is clicked and passing the passedCheck function as callback
+  const checkAll = (e) => {
+    const { name, checked } = e.target;
+    passedCheck(name, checked);
+  };
+
+  //deleting the single row with with delete function and passing to new data to pagination
+
+  const DeleteTr = (delData) => {
+    newRow(delData);
+  };
+
   return (
     <>
       <div className="search">
@@ -31,7 +43,14 @@ const Landing = ({ data, setUpdated, passedCheck }) => {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                name="allSelect"
+                onChange={checkAll}
+                checked={
+                  user.filter((user) => user?.isChecked !== true).length < 1
+                }
+              />
             </th>
             <th>
               <h3>Name</h3>
@@ -50,11 +69,12 @@ const Landing = ({ data, setUpdated, passedCheck }) => {
         <tbody>
           {user.map((e) => (
             <>
-              <tr key={e.id}>
-                <Table
+              <tr className={!e.isChecked ? "nc" : "bc"}>
+                <Row
                   data={e}
                   saveEditedData={saveEditedData}
                   changeValue={changeValue}
+                  DeleteTr={DeleteTr}
                 />
               </tr>
             </>
@@ -65,4 +85,4 @@ const Landing = ({ data, setUpdated, passedCheck }) => {
   );
 };
 
-export default Landing;
+export default Table;

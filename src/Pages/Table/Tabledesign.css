@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+  margin: auto;
+}
+
+table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 60%;
+}
+
+td,
+th {
+  border-bottom: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+}
+.search {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+.search > input {
+  width: 100%;
+}
+.bc {
+  background-color: grey;
+  color: white;
+}
+.nc {
+  background-color: white;
+  color: black;
+}

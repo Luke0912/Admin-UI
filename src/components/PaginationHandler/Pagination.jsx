@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { IoArrowBackCircleSharp } from "@react-icons/all-files/io5/IoArrowBackCircleSharp";
 import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowForwardCircleSharp";
-import Landing from "../../Pages/Landing/Landing";
+import Table from "../../Pages/Table/Table";
 import { TbArrowBarToLeft } from "react-icons/tb";
 import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
@@ -57,21 +57,41 @@ const Pagination = ({ data, toTopLevel }) => {
     toTopLevel(payload);
   };
 
-  //capturing  the value of check box
+  //capturing  the value of check box and mapping it to newData Array
   const passedCheck = (name, checked) => {
-    let tempData = newData.map((e) =>
-      e.name === name ? { ...e, isChecked: !checked } : e
-    );
-    setNewData(tempData);
-    console.log("tempData:", tempData);
+    if (name === "allSelect") {
+      let tempData = newData.map((e) => {
+        return { ...e, isChecked: checked };
+      });
+      setNewData(tempData);
+    } else {
+      let tempData = newData.map((e) =>
+        e.name === name ? { ...e, isChecked: !checked } : e
+      );
+      setNewData(tempData);
+      console.log("tempData:", tempData);
+    }
+  };
+  const newRow = (delData) => {
+    console.log(delData);
+    for (var i = 0; i < newData.length; i++) {
+      console.log(newData[i]);
+      if (JSON.stringify(newData[i]) === JSON.stringify(delData)) {
+        console.log(true);
+        const updatedRows = [...newData];
+        updatedRows.splice(i, 1);
+        setNewData(updatedRows);
+      }
+    }
   };
 
   return (
     <>
-      <Landing
+      <Table
         data={newData}
         setUpdated={setUpdated}
         passedCheck={passedCheck}
+        newRow={newRow}
       />
       <div className={styles.editLayer}>
         <button className={styles.deleteButton}>Delete Selected</button>

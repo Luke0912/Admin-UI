@@ -4,7 +4,7 @@ import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
 import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { useState } from "react";
 
-const Table = ({ data, saveEditedData, changeValue }) => {
+const Row = ({ data, saveEditedData, changeValue, DeleteTr }) => {
   const [editable, setEditable] = useState(false);
 
   const [editableValues, setEditableValues] = useState({
@@ -12,6 +12,7 @@ const Table = ({ data, saveEditedData, changeValue }) => {
     name: data.name,
     role: data.role,
     email: data.email,
+    isChecked: data.isChecked,
   });
   const handleEditing = (e) => {
     const value = { ...editableValues };
@@ -25,11 +26,11 @@ const Table = ({ data, saveEditedData, changeValue }) => {
       name: editableValues.name,
       role: editableValues.role,
       email: editableValues.email,
+      isChecked: data.isChecked,
     };
     setEditableValues(payLoad);
     saveEditedData(payLoad);
     setEditable(false);
-    console.log(editableValues);
   };
 
   const handleUserEdit = () => {
@@ -42,10 +43,19 @@ const Table = ({ data, saveEditedData, changeValue }) => {
     changeValue(name, !checked);
   };
 
+  const Delete = () => {
+    DeleteTr(data);
+  };
+
   return (
     <>
       <td>
-        <input type="checkbox" onChange={handleSelect} name={data.name} />
+        <input
+          type="checkbox"
+          onChange={handleSelect}
+          name={data.name}
+          checked={data.isChecked ? true : false}
+        />
       </td>
       <td>
         <>
@@ -114,10 +124,10 @@ const Table = ({ data, saveEditedData, changeValue }) => {
             style={{ marginRight: "20px" }}
           />
         )}
-        <AiFillDelete />
+        <AiFillDelete onClick={Delete} />
       </td>
     </>
   );
 };
 
-export default Table;
+export default Row;

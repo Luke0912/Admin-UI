@@ -17,7 +17,7 @@ function App() {
     });
   };
 
-  // Final function from the child to topLevel(Parent)
+  // Function from the child to topLevel(Parent)
   const toTopLevel = (payload) => {
     const newData = data.map((e) => {
       if (payload.id === e.id) {
@@ -27,7 +27,6 @@ function App() {
     });
     setData(newData);
   };
-
   return (
     <>
       <div className="App">
