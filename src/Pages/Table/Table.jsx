@@ -4,35 +4,49 @@ import { useEffect, useState } from "react";
 
 import Row from "../../components/RowHandler/Row";
 
-const Table = ({ data, setUpdated, passedCheck, newRow }) => {
+const Table = ({
+  currentData,
+  setEditedDataToPagination,
+  handleSelectToPagination,
+}) => {
   const [user, setUser] = useState([]);
+  console.log("user:",user)
 
   useEffect(() => {
-    setUser(data);
-  }, [data]);
+    setUser(currentData);
+  }, [currentData]);
 
-  //passing the payload from landing to paginated data
+  //passing the payload from row to paginated data
   const saveEditedData = (payload) => {
-    setUpdated(payload);
+    setEditedDataToPagination(payload);
   };
 
-  // passing select function from child to landing
+  // passing select function from row to pagination
 
-  const changeValue = (name, checked) => {
-    passedCheck(name, checked);
+  const handleSelectToTable = (name, checked) => {
+    handleSelectToPagination(name, checked);
   };
 
-  //initiating a function when select all is clicked and passing the passedCheck function as callback
+  //initiating a function when select all is clicked and passing the handleSelectToPagination function as callback
   const checkAll = (e) => {
     const { name, checked } = e.target;
-    passedCheck(name, checked);
+    handleSelectToPagination(name, checked);
   };
 
   //deleting the single row with with delete function and passing to new data to pagination
 
-  const DeleteTr = (delData) => {
-    newRow(delData);
-  };
+  // const DeleteTr = (delData) => {
+  //   console.log(delData);
+  //   for (var i = 0; i < user.length; i++) {
+  //     console.log(user[i]);
+  //     if (JSON.stringify(user[i]) === JSON.stringify(delData)) {
+  //       console.log(true);
+  //       const updatedRows = [...user];
+  //       updatedRows.splice(i, 1);
+  //       setUser(updatedRows);
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -73,8 +87,7 @@ const Table = ({ data, setUpdated, passedCheck, newRow }) => {
                 <Row
                   data={e}
                   saveEditedData={saveEditedData}
-                  changeValue={changeValue}
-                  DeleteTr={DeleteTr}
+                  handleSelectToTable={handleSelectToTable}
                 />
               </tr>
             </>

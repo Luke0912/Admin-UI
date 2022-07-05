@@ -13,12 +13,15 @@ function App() {
 
   const getData = () => {
     axios.get(configuration.BASE_URL).then((data) => {
-      setData(data.data);
+      let tempMark = data.data.map((e) => {
+        return { ...e, isChecked: false };
+      });
+      setData(tempMark);
     });
   };
 
   // Function from the child to topLevel(Parent)
-  const toTopLevel = (payload) => {
+  const setEditedDataToApp = (payload) => {
     const newData = data.map((e) => {
       if (payload.id === e.id) {
         return { ...e, ...payload };
@@ -27,10 +30,28 @@ function App() {
     });
     setData(newData);
   };
+  const handleSelectToApp = (name, checked) => {
+    if (name === "allSelect") {
+      let tempData = data.map((e) => {
+        return { ...e, isChecked: checked };
+      });
+      setData(tempData);
+    } else {
+      let tempData = data.map((e) =>
+        e.name === name ? { ...e, isChecked: !checked } : e
+      );
+      setData(tempData);
+    }
+  };
+
   return (
     <>
       <div className="App">
-        <Pagination data={data} toTopLevel={toTopLevel} />
+        <Pagination
+          data={data}
+          setEditedDataToApp={setEditedDataToApp}
+          handleSelectToApp={handleSelectToApp}
+        />
       </div>
     </>
   );

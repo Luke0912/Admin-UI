@@ -4,7 +4,7 @@ import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
 import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { useState } from "react";
 
-const Row = ({ data, saveEditedData, changeValue, DeleteTr }) => {
+const Row = ({ data, saveEditedData, handleSelectToTable, }) => {
   const [editable, setEditable] = useState(false);
 
   const [editableValues, setEditableValues] = useState({
@@ -40,12 +40,12 @@ const Row = ({ data, saveEditedData, changeValue, DeleteTr }) => {
   // select row
   const handleSelect = (e) => {
     const { name, checked } = e.target;
-    changeValue(name, !checked);
+    handleSelectToTable(name, !checked);
   };
 
-  const Delete = () => {
-    DeleteTr(data);
-  };
+  // const Delete = () => {
+  //   DeleteTr(data);
+  // };
 
   return (
     <>
@@ -124,7 +124,7 @@ const Row = ({ data, saveEditedData, changeValue, DeleteTr }) => {
             style={{ marginRight: "20px" }}
           />
         )}
-        <AiFillDelete onClick={Delete} />
+        <AiFillDelete  />
       </td>
     </>
   );
