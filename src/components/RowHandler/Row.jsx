@@ -4,29 +4,29 @@ import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
 import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { useState } from "react";
 
-const Row = ({ data, saveEditedData, handleSelectToTable, }) => {
+const Row = ({ e, saveEditedData, handleSelectToTable }) => {
   const [editable, setEditable] = useState(false);
 
   const [editableValues, setEditableValues] = useState({
-    id: data.id,
-    name: data.name,
-    role: data.role,
-    email: data.email,
-    isChecked: data.isChecked,
+    id: e.id,
+    name: e.name,
+    role: e.role,
+    email: e.email,
+    isChecked: e.isChecked,
   });
-  const handleEditing = (e) => {
+  const handleEditing = (event) => {
     const value = { ...editableValues };
-    const nValues = { ...value, [e.target.name]: e.target.value };
+    const nValues = { ...value, [event.target.name]: event.target.value };
     setEditableValues(nValues);
   };
 
   const onConfirm = () => {
     const payLoad = {
-      id: data.id,
+      id: e.id,
       name: editableValues.name,
       role: editableValues.role,
       email: editableValues.email,
-      isChecked: data.isChecked,
+      isChecked: e.isChecked,
     };
     setEditableValues(payLoad);
     saveEditedData(payLoad);
@@ -53,8 +53,8 @@ const Row = ({ data, saveEditedData, handleSelectToTable, }) => {
         <input
           type="checkbox"
           onChange={handleSelect}
-          name={data.name}
-          checked={data.isChecked ? true : false}
+          name={e.name}
+          checked={e.isChecked ? true : false}
         />
       </td>
       <td>
@@ -119,12 +119,12 @@ const Row = ({ data, saveEditedData, handleSelectToTable, }) => {
           <FaUndo
             onClick={() => {
               setEditable(false);
-              setEditableValues(data);
+              setEditableValues(e);
             }}
             style={{ marginRight: "20px" }}
           />
         )}
-        <AiFillDelete  />
+        <AiFillDelete />
       </td>
     </>
   );

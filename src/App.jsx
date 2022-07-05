@@ -6,6 +6,7 @@ import configuration from "./configs";
 
 function App() {
   const [data, setData] = useState([]);
+  console.log(data);
 
   useEffect(() => {
     getData();

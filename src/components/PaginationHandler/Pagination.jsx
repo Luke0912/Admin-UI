@@ -1,27 +1,28 @@
+import { useEffect, useState } from "react";
+
 import { IoArrowBackCircleSharp } from "@react-icons/all-files/io5/IoArrowBackCircleSharp";
 import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowForwardCircleSharp";
 import Table from "../../Pages/Table/Table";
 import { TbArrowBarToLeft } from "react-icons/tb";
 import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
-import { useState } from "react";
 
 const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
+  console.log("data:", data);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dataPerPage] = useState(10);
 
-  // const [paginated, setPaginated] = useState([]);
+  const [paginated, setPaginated] = useState([]);
+  console.log("paginated:", paginated);
 
-  //get number of data per page
-  const indexOfLastData = currentPage * dataPerPage;
-  const indexOfFirstData = indexOfLastData - dataPerPage;
-  const currentData = data.slice(indexOfFirstData, indexOfLastData);
-
-  // useEffect(() => {
-  //   setPaginated(data);
-  //   setPaginated(currentData);
-  // }, [data, currentData]);
+  useEffect(() => {
+    //get number of data per page
+    const indexOfLastData = currentPage * dataPerPage;
+    const indexOfFirstData = indexOfLastData - dataPerPage;
+    const currentData = data.slice(indexOfFirstData, indexOfLastData);
+    setPaginated(currentData);
+  }, [data, currentPage, dataPerPage]);
 
   const pageNumbers = [];
 
@@ -75,7 +76,7 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
   return (
     <>
       <Table
-        currentData={currentData}
+        currentData={paginated}
         setEditedDataToPagination={setEditedDataToPagination}
         handleSelectToPagination={handleSelectToPagination}
       />

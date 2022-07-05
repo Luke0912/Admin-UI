@@ -10,7 +10,6 @@ const Table = ({
   handleSelectToPagination,
 }) => {
   const [user, setUser] = useState([]);
-  console.log("user:",user)
 
   useEffect(() => {
     setUser(currentData);
@@ -85,7 +84,7 @@ const Table = ({
             <>
               <tr className={!e.isChecked ? "nc" : "bc"}>
                 <Row
-                  data={e}
+                  e={e}
                   saveEditedData={saveEditedData}
                   handleSelectToTable={handleSelectToTable}
                 />
