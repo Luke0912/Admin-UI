@@ -1,4 +1,4 @@
-import "./tableDesign.css";
+import "./table.css";
 
 import Row from "../../components/RowHandler/Row";
 
