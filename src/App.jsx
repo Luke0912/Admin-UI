@@ -6,7 +6,6 @@ import configuration from "./configs";
 
 function App() {
   const [data, setData] = useState([]);
-  console.log(data);
 
   useEffect(() => {
     getData();
@@ -21,7 +20,6 @@ function App() {
     });
   };
 
-  // Function from the child to topLevel(Parent)
   const setEditedDataToApp = (payload) => {
     const newData = data.map((e) => {
       if (payload.id === e.id) {

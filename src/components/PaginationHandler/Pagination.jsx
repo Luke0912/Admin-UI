@@ -1,34 +1,29 @@
-import { useEffect, useState } from "react";
+import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 
 import { IoArrowBackCircleSharp } from "@react-icons/all-files/io5/IoArrowBackCircleSharp";
 import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowForwardCircleSharp";
 import Table from "../../Pages/Table/Table";
-import { TbArrowBarToLeft } from "react-icons/tb";
-import { TbArrowBarToRight } from "react-icons/tb";
 import styles from "./Pagination.module.css";
+import { useState } from "react";
 
 const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
-  console.log("data:", data);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [dataPerPage] = useState(10);
+  const [dataLimit] = useState(10);
 
-  const [paginated, setPaginated] = useState([]);
-  console.log("paginated:", paginated);
+  const getPaginatedData = () => {
+    const startIndex = currentPage * dataLimit - dataLimit;
+    const endIndex = startIndex + dataLimit;
+    return data.slice(startIndex, endIndex);
+  };
 
-  useEffect(() => {
-    //get number of data per page
-    const indexOfLastData = currentPage * dataPerPage;
-    const indexOfFirstData = indexOfLastData - dataPerPage;
-    const currentData = data.slice(indexOfFirstData, indexOfLastData);
-    setPaginated(currentData);
-  }, [data, currentPage, dataPerPage]);
-
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(data.length / dataPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(data.length / dataLimit); i++) {
+      pageNumbers.push(i);
+    }
+    return pageNumbers;
+  };
 
   const goToNextPage = () => {
     setCurrentPage((page) => page + 1);
@@ -47,15 +42,13 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
   };
 
   const toLast = () => {
-    setCurrentPage(pageNumbers.length);
+    setCurrentPage(getPageNumbers().length);
   };
 
-  // passing the updated data to top level
   const setEditedDataToPagination = (payload) => {
     setEditedDataToApp(payload);
   };
 
-  //selected check from row to pagination to app.jsx
   const handleSelectToPagination = (name, checked) => {
     handleSelectToApp(name, checked);
   };
@@ -76,7 +69,7 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
   return (
     <>
       <Table
-        currentData={paginated}
+        user={getPaginatedData()}
         setEditedDataToPagination={setEditedDataToPagination}
         handleSelectToPagination={handleSelectToPagination}
       />
@@ -94,14 +87,14 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
           <IoArrowBackCircleSharp fontSize="30px" />
         </button>
 
-        {pageNumbers.map((number) => (
+        {getPageNumbers().map((number) => (
           <button key={number} className={styles.button} onClick={changePage}>
             {number}
           </button>
         ))}
         <button
           onClick={goToNextPage}
-          disabled={currentPage === pageNumbers.length}
+          disabled={currentPage === getPageNumbers().length}
           className={styles.next}
         >
           <IoArrowForwardCircleSharp fontSize="30px" />

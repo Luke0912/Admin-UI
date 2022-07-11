@@ -1,32 +1,20 @@
-import "./Tabledesign.css";
-
-import { useEffect, useState } from "react";
+import "./TableDesign.css";
 
 import Row from "../../components/RowHandler/Row";
 
 const Table = ({
-  currentData,
+  user,
   setEditedDataToPagination,
   handleSelectToPagination,
 }) => {
-  const [user, setUser] = useState([]);
-
-  useEffect(() => {
-    setUser(currentData);
-  }, [currentData]);
-
-  //passing the payload from row to paginated data
   const saveEditedData = (payload) => {
     setEditedDataToPagination(payload);
   };
-
-  // passing select function from row to pagination
 
   const handleSelectToTable = (name, checked) => {
     handleSelectToPagination(name, checked);
   };
 
-  //initiating a function when select all is clicked and passing the handleSelectToPagination function as callback
   const checkAll = (e) => {
     const { name, checked } = e.target;
     handleSelectToPagination(name, checked);
@@ -80,16 +68,17 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {user.map((e) => (
-            <>
-              <tr className={!e.isChecked ? "nc" : "bc"}>
-                <Row
-                  e={e}
-                  saveEditedData={saveEditedData}
-                  handleSelectToTable={handleSelectToTable}
-                />
-              </tr>
-            </>
+          {user.map((e, index) => (
+            <tr
+              className={!e.isChecked ? "nc" : "bc"}
+              key={index + Math.random()}
+            >
+              <Row
+                e={e}
+                saveEditedData={saveEditedData}
+                handleSelectToTable={handleSelectToTable}
+              />
+            </tr>
           ))}
         </tbody>
       </table>
