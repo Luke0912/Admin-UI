@@ -6,7 +6,12 @@ const Table = ({
   user,
   setEditedDataToPagination,
   handleSelectToPagination,
+  queryToPagination,
 }) => {
+  const handleQuery = (e) => {
+    queryToPagination(e.target.value);
+  };
+  
   const saveEditedData = (payload) => {
     setEditedDataToPagination(payload);
   };
@@ -38,7 +43,8 @@ const Table = ({
   return (
     <>
       <div className="search">
-        <input type="text" placeholder="Search User" />
+        <input type="text" placeholder="Search User"
+                onChange={handleQuery} />
       </div>
       <table>
         <thead>

@@ -6,7 +6,7 @@ import Table from "../../Pages/Table/Table";
 import styles from "./Pagination.module.css";
 import { useState } from "react";
 
-const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
+const Pagination = ({ data, setEditedDataToApp, handleSelectToApp,queryToApp }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dataLimit] = useState(10);
@@ -66,9 +66,14 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp }) => {
   //   }
   // };
 
+  const queryToPagination = (query) => {
+    queryToApp(query);
+  };
+
   return (
     <>
       <Table
+        queryToPagination={queryToPagination}
         user={getPaginatedData()}
         setEditedDataToPagination={setEditedDataToPagination}
         handleSelectToPagination={handleSelectToPagination}

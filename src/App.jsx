@@ -6,6 +6,7 @@ import configuration from "./configs";
 
 function App() {
   const [data, setData] = useState([]);
+  const [query, setNewQuery] = useState("");
 
   useEffect(() => {
     getData();
@@ -43,11 +44,22 @@ function App() {
     }
   };
 
+ const keys = ["name", "role", "email"];
+  const search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item[key].toLowerCase().includes(query))
+    );
+  };
+  const queryToApp = (payload) => {
+    setNewQuery(payload);
+  };
+
   return (
     <>
       <div className="App">
         <Pagination
-          data={data}
+          queryToApp={queryToApp}
+          data={search(data)}
           setEditedDataToApp={setEditedDataToApp}
           handleSelectToApp={handleSelectToApp}
         />
