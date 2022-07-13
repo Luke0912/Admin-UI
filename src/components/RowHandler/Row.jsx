@@ -1,10 +1,10 @@
-import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
-import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
-import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
-import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
-import { useState } from "react";
+import { AiFillDelete } from '@react-icons/all-files/ai/AiFillDelete';
+import { FaCheck } from '@react-icons/all-files/fa/FaCheck';
+import { FaEdit } from '@react-icons/all-files/fa/FaEdit';
+import { FaUndo } from '@react-icons/all-files/fa/FaUndo';
+import { useState } from 'react';
 
-const Row = ({ e, saveEditedData, handleSelectToTable }) => {
+const Row = ({ e, saveEditedData, handleSelectToTable, DeleteTr }) => {
   const [editable, setEditable] = useState(false);
 
   const [editableValues, setEditableValues] = useState({
@@ -14,10 +14,20 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
     email: e.email,
     isChecked: e.isChecked,
   });
+
   const handleEditing = (event) => {
     const value = { ...editableValues };
     const nValues = { ...value, [event.target.name]: event.target.value };
     setEditableValues(nValues);
+  };
+
+  const handleUserEdit = () => {
+    setEditable((curr) => !curr);
+  };
+
+  const handleSelect = (e) => {
+    const { name, checked } = e.target;
+    handleSelectToTable(name, !checked);
   };
 
   const onConfirm = () => {
@@ -33,25 +43,15 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
     setEditable(false);
   };
 
-  const handleUserEdit = () => {
-    setEditable((curr) => !curr);
+  const Delete = () => {
+    DeleteTr(e);
   };
-
-  // select row
-  const handleSelect = (e) => {
-    const { name, checked } = e.target;
-    handleSelectToTable(name, !checked);
-  };
-
-  // const Delete = () => {
-  //   DeleteTr(data);
-  // };
 
   return (
     <>
       <td>
         <input
-          type="checkbox"
+          type='checkbox'
           onChange={handleSelect}
           name={e.name}
           checked={e.isChecked ? true : false}
@@ -63,10 +63,10 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
           {editable && (
             <>
               <input
-                type="text"
-                placeholder="Name"
+                type='text'
+                placeholder='Name'
                 value={editableValues.name}
-                name="name"
+                name='name'
                 onChange={handleEditing}
               />
               <br />
@@ -80,10 +80,10 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
           {editable && (
             <>
               <input
-                type="text"
-                placeholder="Role"
+                type='text'
+                placeholder='Role'
                 value={editableValues.role}
-                name="role"
+                name='role'
                 onChange={handleEditing}
               />
               <br />
@@ -97,10 +97,10 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
           {editable && (
             <>
               <input
-                type="text"
-                placeholder="Email"
+                type='text'
+                placeholder='Email'
                 value={editableValues.email}
-                name="email"
+                name='email'
                 onChange={handleEditing}
               />
               <br />
@@ -110,10 +110,10 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
       </td>
       <td>
         {!editable && (
-          <FaEdit onClick={handleUserEdit} style={{ marginRight: "20px" }} />
+          <FaEdit onClick={handleUserEdit} style={{ marginRight: '20px' }} />
         )}
         {editable && (
-          <FaCheck onClick={onConfirm} style={{ marginRight: "20px" }} />
+          <FaCheck onClick={onConfirm} style={{ marginRight: '20px' }} />
         )}
         {editable && (
           <FaUndo
@@ -121,10 +121,10 @@ const Row = ({ e, saveEditedData, handleSelectToTable }) => {
               setEditable(false);
               setEditableValues(e);
             }}
-            style={{ marginRight: "20px" }}
+            style={{ marginRight: '20px' }}
           />
         )}
-        <AiFillDelete />
+        <AiFillDelete onClick={Delete} />
       </td>
     </>
   );

@@ -1,61 +1,73 @@
-import "./table.css";
+import './table.css';
 
-import Row from "../../components/RowHandler/Row";
+import { useEffect, useState } from 'react';
+
+import Row from '../RowHandler/Row';
 
 const Table = ({
-  user,
+  data,
   setEditedDataToPagination,
-  handleSelectToPagination,
   queryToPagination,
+  DeleteTrToPagination,
+  trueDataToPagination,
 }) => {
+  const [newData, setNewData] = useState([]);
+
+  useEffect(() => {
+    setNewData(data);
+  }, [data]);
+
   const handleQuery = (e) => {
     queryToPagination(e.target.value);
   };
-  
+
   const saveEditedData = (payload) => {
     setEditedDataToPagination(payload);
   };
 
   const handleSelectToTable = (name, checked) => {
-    handleSelectToPagination(name, checked);
+    handleSelect(name, checked);
   };
 
   const checkAll = (e) => {
     const { name, checked } = e.target;
-    handleSelectToPagination(name, checked);
+    handleSelect(name, checked);
   };
 
-  //deleting the single row with with delete function and passing to new data to pagination
+  const handleSelect = (name, checked) => {
+    if (name === 'allSelect') {
+      let tempData = newData.map((e) => {
+        return { ...e, isChecked: checked };
+      });
+      setNewData(tempData);
+      // trueDataToPagination(tempData);
+    } else {
+      let tempData = newData.map((e) =>
+        e.name === name ? { ...e, isChecked: !checked } : e
+      );
+      setNewData(tempData);
+    }
+  };
 
-  // const DeleteTr = (delData) => {
-  //   console.log(delData);
-  //   for (var i = 0; i < user.length; i++) {
-  //     console.log(user[i]);
-  //     if (JSON.stringify(user[i]) === JSON.stringify(delData)) {
-  //       console.log(true);
-  //       const updatedRows = [...user];
-  //       updatedRows.splice(i, 1);
-  //       setUser(updatedRows);
-  //     }
-  //   }
-  // };
+  const DeleteTr = (trData) => {
+    DeleteTrToPagination(trData);
+  };
 
   return (
     <>
-      <div className="search">
-        <input type="text" placeholder="Search User"
-                onChange={handleQuery} />
+      <div className='search'>
+        <input type='text' placeholder='Search User' onChange={handleQuery} />
       </div>
       <table>
         <thead>
           <tr>
             <th>
               <input
-                type="checkbox"
-                name="allSelect"
+                type='checkbox'
+                name='allSelect'
                 onChange={checkAll}
                 checked={
-                  user.filter((user) => user?.isChecked !== true).length < 1
+                  newData.filter((d) => d?.isChecked !== true).length < 1
                 }
               />
             </th>
@@ -74,15 +86,16 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {user.map((e, index) => (
+          {newData.map((e, index) => (
             <tr
-              className={!e.isChecked ? "nc" : "bc"}
+              className={!e.isChecked ? 'nc' : 'bc'}
               key={index + Math.random()}
             >
               <Row
                 e={e}
                 saveEditedData={saveEditedData}
                 handleSelectToTable={handleSelectToTable}
+                DeleteTr={DeleteTr}
               />
             </tr>
           ))}

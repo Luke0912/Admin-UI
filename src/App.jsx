@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import Pagination from "./components/PaginationHandler/Pagination";
-import axios from "axios";
-import configuration from "./configs";
+import Pagination from './components/PaginationHandler/Pagination';
+import axios from 'axios';
+import configuration from './configs';
 
 function App() {
   const [data, setData] = useState([]);
-  const [query, setNewQuery] = useState("");
+  const [query, setNewQuery] = useState('');
+  const keys = ['name', 'role', 'email'];
 
   useEffect(() => {
     getData();
@@ -21,6 +22,16 @@ function App() {
     });
   };
 
+  const queryToApp = (payload) => {
+    setNewQuery(payload);
+  };
+
+  const search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item[key].toLowerCase().includes(query))
+    );
+  };
+
   const setEditedDataToApp = (payload) => {
     const newData = data.map((e) => {
       if (payload.id === e.id) {
@@ -30,38 +41,21 @@ function App() {
     });
     setData(newData);
   };
-  const handleSelectToApp = (name, checked) => {
-    if (name === "allSelect") {
-      let tempData = data.map((e) => {
-        return { ...e, isChecked: checked };
-      });
-      setData(tempData);
-    } else {
-      let tempData = data.map((e) =>
-        e.name === name ? { ...e, isChecked: !checked } : e
-      );
-      setData(tempData);
-    }
-  };
 
- const keys = ["name", "role", "email"];
-  const search = (data) => {
-    return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query))
-    );
-  };
-  const queryToApp = (payload) => {
-    setNewQuery(payload);
+  const DeleteTrToApp = (trData) => {
+    const { id } = trData;
+    const delUpdatedArr = data.filter((e) => e.id !== id);
+    setData(delUpdatedArr);
   };
 
   return (
     <>
-      <div className="App">
+      <div className='App'>
         <Pagination
           queryToApp={queryToApp}
           data={search(data)}
           setEditedDataToApp={setEditedDataToApp}
-          handleSelectToApp={handleSelectToApp}
+          DeleteTrToApp={DeleteTrToApp}
         />
       </div>
     </>

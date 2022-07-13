@@ -1,12 +1,17 @@
-import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
+import { TbArrowBarToLeft, TbArrowBarToRight } from 'react-icons/tb';
 
-import { IoArrowBackCircleSharp } from "@react-icons/all-files/io5/IoArrowBackCircleSharp";
-import { IoArrowForwardCircleSharp } from "@react-icons/all-files/io5/IoArrowForwardCircleSharp";
-import Table from "../../Pages/Table/Table";
-import styles from "./Pagination.module.css";
-import { useState } from "react";
+import { IoArrowBackCircleSharp } from '@react-icons/all-files/io5/IoArrowBackCircleSharp';
+import { IoArrowForwardCircleSharp } from '@react-icons/all-files/io5/IoArrowForwardCircleSharp';
+import Table from '../Table/Table';
+import styles from './Pagination.module.css';
+import { useState } from 'react';
 
-const Pagination = ({ data, setEditedDataToApp, handleSelectToApp,queryToApp }) => {
+const Pagination = ({
+  data,
+  setEditedDataToApp,
+  queryToApp,
+  DeleteTrToApp,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dataLimit] = useState(10);
@@ -49,39 +54,35 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp,queryToApp }) 
     setEditedDataToApp(payload);
   };
 
-  const handleSelectToPagination = (name, checked) => {
-    handleSelectToApp(name, checked);
-  };
-
-  // const newRow = (delData) => {
-  //   console.log(delData);
-  //   for (var i = 0; i < newData.length; i++) {
-  //     console.log(newData[i]);
-  //     if (JSON.stringify(newData[i]) === JSON.stringify(delData)) {
-  //       console.log(true);
-  //       const updatedRows = [...newData];
-  //       updatedRows.splice(i, 1);
-  //       setNewData(updatedRows);
-  //     }
-  //   }
-  // };
-
   const queryToPagination = (query) => {
     queryToApp(query);
   };
+
+  const DeleteTrToPagination = (trData) => {
+    DeleteTrToApp(trData);
+  };
+
+  // const deleteSelected = (e, data) => {
+  //   console.log(data);
+  // };
+
+  // const trueDataToPagination = (data) => {
+  //   deleteSelected(data);
+  // };
 
   return (
     <>
       <Table
         queryToPagination={queryToPagination}
-        user={getPaginatedData()}
+        data={getPaginatedData()}
         setEditedDataToPagination={setEditedDataToPagination}
-        handleSelectToPagination={handleSelectToPagination}
+        DeleteTrToPagination={DeleteTrToPagination}
+        // trueDataToPagination={trueDataToPagination}
       />
       <div className={styles.editLayer}>
         <button className={styles.deleteButton}>Delete Selected</button>
         <button onClick={toFirst} className={styles.prev}>
-          <TbArrowBarToLeft fontSize="30px" />
+          <TbArrowBarToLeft fontSize='30px' />
         </button>
 
         <button
@@ -89,7 +90,7 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp,queryToApp }) 
           disabled={currentPage === 1}
           className={styles.prev}
         >
-          <IoArrowBackCircleSharp fontSize="30px" />
+          <IoArrowBackCircleSharp fontSize='30px' />
         </button>
 
         {getPageNumbers().map((number) => (
@@ -102,10 +103,10 @@ const Pagination = ({ data, setEditedDataToApp, handleSelectToApp,queryToApp }) 
           disabled={currentPage === getPageNumbers().length}
           className={styles.next}
         >
-          <IoArrowForwardCircleSharp fontSize="30px" />
+          <IoArrowForwardCircleSharp fontSize='30px' />
         </button>
         <button onClick={toLast} className={styles.prev}>
-          <TbArrowBarToRight fontSize="30px" />
+          <TbArrowBarToRight fontSize='30px' />
         </button>
       </div>
     </>
