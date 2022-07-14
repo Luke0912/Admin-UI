@@ -62,14 +62,6 @@ const Pagination = ({
     DeleteTrToApp(trData);
   };
 
-  // const deleteSelected = (e, data) => {
-  //   console.log(data);
-  // };
-
-  // const trueDataToPagination = (data) => {
-  //   deleteSelected(data);
-  // };
-
   return (
     <>
       <Table
@@ -77,10 +69,8 @@ const Pagination = ({
         data={getPaginatedData()}
         setEditedDataToPagination={setEditedDataToPagination}
         DeleteTrToPagination={DeleteTrToPagination}
-        // trueDataToPagination={trueDataToPagination}
       />
       <div className={styles.editLayer}>
-        <button className={styles.deleteButton}>Delete Selected</button>
         <button onClick={toFirst} className={styles.prev}>
           <TbArrowBarToLeft fontSize='30px' />
         </button>

@@ -33,3 +33,14 @@ th {
   background-color: white;
   color: black;
 }
+.deleteButton {
+  background-color: red;
+  color: white;
+  width: 12%;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  margin-top: 30px;
+  margin-left: 20%;
+}

@@ -39,6 +39,7 @@ function App() {
       }
       return e;
     });
+
     setData(newData);
   };
 

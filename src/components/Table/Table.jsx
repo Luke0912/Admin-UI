@@ -9,7 +9,6 @@ const Table = ({
   setEditedDataToPagination,
   queryToPagination,
   DeleteTrToPagination,
-  trueDataToPagination,
 }) => {
   const [newData, setNewData] = useState([]);
 
@@ -40,7 +39,6 @@ const Table = ({
         return { ...e, isChecked: checked };
       });
       setNewData(tempData);
-      // trueDataToPagination(tempData);
     } else {
       let tempData = newData.map((e) =>
         e.name === name ? { ...e, isChecked: !checked } : e
@@ -51,6 +49,12 @@ const Table = ({
 
   const DeleteTr = (trData) => {
     DeleteTrToPagination(trData);
+  };
+
+  const deleteSelected = (e) => {
+    e.preventDefault();
+    const delSelectData = newData.filter((e) => e.isChecked !== true);
+    setNewData(delSelectData);
   };
 
   return (
@@ -101,6 +105,9 @@ const Table = ({
           ))}
         </tbody>
       </table>
+      <button className='deleteButton' onClick={deleteSelected}>
+        Delete Selected
+      </button>
     </>
   );
 };

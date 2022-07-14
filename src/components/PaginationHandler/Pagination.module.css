@@ -2,30 +2,23 @@
   background-color: rgb(0, 0, 0);
   color: white;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 2rem;
+  height: 2rem;
   border: none;
   outline: none;
 }
 .editLayer {
   margin: auto;
-  margin-top: 20px;
-  width: 60%;
+  margin-left: 35%;
+  margin-top: -30px;
+  width: 40%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-.deleteButton {
-  background-color: red;
-  color: white;
-  width: 120px;
-  height: 30px;
-  outline: none;
-  border: none;
-  border-radius: 10px;
-}
 .prev {
   background-color: white;
+  margin-left: 2%;
   width: 0px;
   height: 30px;
   outline: none;
@@ -33,6 +26,7 @@
 }
 .next {
   background-color: white;
+  margin-left: 2%;
   width: 0px;
   height: 30px;
   outline: none;
